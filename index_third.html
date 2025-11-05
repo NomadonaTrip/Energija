@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Energija — Prototype</title>
+
+    <!-- Critical styles inlined for fast FCP -->
+    <style>
+      :root {
+        --primary: #cd1811;
+        --charcoal: #4d494a;
+        --muted: #9a9a9a;
+        --bg: #ffffff;
+        --space-xs: 8px;
+        --space-sm: 12px;
+        --space-md: 24px;
+        --space-lg: 40px;
+        --radius: 10px;
+        --max-content: 1200px;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        font-family: "Vremena Grotesk", system-ui, -apple-system, "Segoe UI",
+          Roboto, "Helvetica Neue", Arial;
+        color: var(--charcoal);
+        background: var(--bg);
+        margin: 0;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      /* Layout */
+      .site {
+        max-width: var(--max-content);
+        margin: 0 auto;
+        padding: 0 var(--space-md);
+      }
+      header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 18px 0;
+        position: sticky;
+        top: 0;
+        background: linear-gradient(transparent, rgba(255, 255, 255, 0.95));
+        backdrop-filter: blur(4px);
+        z-index: 40;
+      }
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .logo img {
+        height: 36px;
+        width: auto;
+        display: block;
+      }
+      nav {
+        display: flex;
+        gap: 20px;
+        align-items: center;
+      }
+      .btn {
+        display: inline-block;
+        padding: 10px 16px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+      }
+      .btn-primary {
+        background: var(--primary);
+        color: #fff;
+      }
+      .btn-ghost {
+        border: 1px solid var(--charcoal);
+        color: var(--charcoal);
+        background: transparent;
+      }
+
+      /* Hero */
+      .hero {
+        display: grid;
+        grid-template-columns: 1fr 520px;
+        gap: 40px;
+        align-items: center;
+        padding: 60px 0 40px;
+      }
+      .hero .eyebrow {
+        font-size: 13px;
+        text-transform: uppercase;
+        color: var(--muted);
+        letter-spacing: 0.08em;
+      }
+      .hero h1 {
+        font-size: 46px;
+        line-height: 1.02;
+        margin: 12px 0 10px;
+      }
+      .hero p.lead {
+        font-size: 18px;
+        color: var(--charcoal);
+        margin: 0 0 18px;
+      }
+      .hero .cta-row {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+      }
+
+      .hero-visual {
+        height: 360px;
+        border-radius: 14px;
+        background: linear-gradient(180deg, #fff, #f7f7f7);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 8px 28px rgba(77, 73, 74, 0.06);
+      }
+      .hero-visual .device {
+        width: 260px;
+        height: 220px;
+        border-radius: 12px;
+        background: linear-gradient(
+          135deg,
+          rgba(205, 24, 17, 0.06),
+          rgba(77, 73, 74, 0.02)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      /* Sections */
+      section {
+        padding: 48px 0;
+      }
+      .grid-3 {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+      }
+      .card {
+        background: #fff;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 6px 18px rgba(77, 73, 74, 0.04);
+        transform: translateY(0);
+        transition: transform 0.28s ease, box-shadow 0.28s ease;
+      }
+      .card:focus-within,
+      .card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 12px 30px rgba(77, 73, 74, 0.08);
+      }
+
+      .case-carousel {
+        position: relative;
+      }
+      .carousel-track {
+        display: flex;
+        gap: 18px;
+        overflow: hidden;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+      }
+      .slide {
+        min-width: 320px;
+        flex: 0 0 60%;
+        scroll-snap-align: center;
+        border-radius: 12px;
+        background: #fff;
+        padding: 18px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+      }
+      .carousel-controls {
+        display: flex;
+        gap: 8px;
+        position: absolute;
+        right: 6px;
+        top: -36px;
+      }
+
+      /* CTA band */
+      .lead-cta {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        padding: 28px;
+        border-radius: 12px;
+        background: linear-gradient(
+          90deg,
+          rgba(205, 24, 17, 0.06),
+          rgba(77, 73, 74, 0.02)
+        );
+      }
+
+      /* Footer */
+      footer {
+        padding: 48px 0;
+        border-top: 1px solid #eee;
+      }
+
+      /* Accessibility focus */
+      :focus {
+        outline: 3px solid rgba(205, 24, 17, 0.14);
+        outline-offset: 3px;
+      }
+
+      /* Responsive adjustments */
+      @media (max-width: 1024px) {
+        .hero {
+          grid-template-columns: 1fr;
+          padding: 40px 0;
+        }
+        .hero-visual {
+          height: 260px;
+        }
+        .carousel-track {
+          gap: 12px;
+        }
+      }
+      @media (max-width: 520px) {
+        header {
+          padding: 10px 0;
+        }
+        .logo img {
+          height: 28px;
+        }
+        .hero h1 {
+          font-size: 28px;
+        }
+        .hero p.lead {
+          font-size: 15px;
+        }
+        .slide {
+          min-width: 80%;
+          flex: 0 0 80%;
+        }
+      }
+
+      /* Smartwatch narrow view (very small devices) */
+      @media (max-width: 280px) {
+        .site {
+          padding: 0 8px;
+        }
+        header nav {
+          display: none;
+        }
+        .btn-primary {
+          padding: 8px 10px;
+          font-size: 12px;
+        }
+        .hero h1 {
+          font-size: 18px;
+        }
+        .hero p.lead {
+          display: none;
+        }
+      }
+
+      /* Reduced motion */
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          transition: none !important;
+          animation: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site" role="banner">
+      <div class="logo" aria-label="Energija Integrated Systems logo">
+        <!-- Replace src with SVG logo during production -->
+        <img src="/mnt/data/energija_logo.jpg" alt="Energija logo" />
+        <strong style="font-size: 15px">Energija</strong>
+      </div>
+
+      <nav role="navigation" aria-label="Main navigation">
+        <a href="#services">Services</a>
+        <a href="#cases">Case Studies</a>
+        <a href="#about">About</a>
+        <a class="btn btn-ghost" href="#contact">Contact</a>
+        <a class="btn btn-primary" href="#quote">Request Quote</a>
+      </nav>
+    </header>
+
+    <main>
+      <div class="site">
+        <!-- HERO -->
+        <section class="hero" aria-labelledby="hero-heading">
+          <div>
+            <div class="eyebrow">Energija Integrated Systems</div>
+            <h1 id="hero-heading">
+              Smarter Lighting. Lower Costs. Sustainable Impact.
+            </h1>
+            <p class="lead">
+              Powering Nigeria’s Businesses with Intelligent Energy Solutions
+            </p>
+            <p class="lead" style="color: var(--muted)">
+              Energija Integrated Systems helps construction, real estate, and
+              facility management professionals reduce operational costs through
+              advanced energy-saving lighting control systems and LED lighting
+              solutions.
+            </p>
+
+            <div class="cta-row">
+              <a class="btn btn-primary" href="#quote">Request a Quote</a>
+              <a class="btn btn-ghost" href="#cases">View Case Studies</a>
+            </div>
+          </div>
+
+          <div class="hero-visual" aria-hidden="true">
+            <div class="device" id="device-anim" aria-hidden="true">
+              <!-- Simple animated SVG placeholder -->
+              <svg
+                width="180"
+                height="120"
+                viewBox="0 0 180 120"
+                xmlns="http://www.w3.org/2000/svg"
+                role="img"
+                aria-hidden="true"
+              >
+                <rect
+                  x="6"
+                  y="8"
+                  width="168"
+                  height="104"
+                  rx="10"
+                  fill="#fff"
+                  stroke="#e9e9e9"
+                />
+                <circle cx="36" cy="36" r="8" fill="#CD1811" />
+                <rect
+                  x="60"
+                  y="28"
+                  width="88"
+                  height="12"
+                  rx="6"
+                  fill="#f3f3f3"
+                />
+                <rect
+                  x="60"
+                  y="52"
+                  width="48"
+                  height="10"
+                  rx="6"
+                  fill="#f3f3f3"
+                />
+              </svg>
+            </div>
+          </div>
+        </section>
+
+        <!-- Problem (reveal-on-scroll) -->
+        <section id="problem" aria-labelledby="problem-heading">
+          <h2 id="problem-heading">⚡ The Problem</h2>
+          <div class="grid-3">
+            <article class="card reveal" tabindex="0">
+              <h3>Rising energy costs</h3>
+              <p>
+                Rising energy costs are eating into profits for many commercial
+                operations across Nigeria.
+              </p>
+            </article>
+            <article class="card reveal" tabindex="0">
+              <h3>Manual controls</h3>
+              <p>
+                Most commercial spaces still rely on manual lighting control —
+                inconsistent schedules and guesswork cause waste.
+              </p>
+            </article>
+            <article class="card reveal" tabindex="0">
+              <h3>Unpredictable bills</h3>
+              <p>
+                Wasted power leads to unpredictable bills and declining
+                profitability.
+              </p>
+            </article>
+          </div>
+        </section>
+
+        <!-- Solution -->
+        <section id="solution" aria-labelledby="solution-heading">
+          <h2 id="solution-heading">💡 The Energija Solution</h2>
+          <div
+            style="
+              display: flex;
+              gap: 24px;
+              align-items: flex-start;
+              flex-wrap: wrap;
+            "
+          >
+            <div style="flex: 1; min-width: 280px">
+              <p>
+                We provide intelligent lighting control systems and
+                high-efficiency LED solutions that deliver measurable energy
+                savings from day one.
+              </p>
+              <ul>
+                <li>Instant cost savings on energy consumption</li>
+                <li>ROI within 12–18 months of implementation</li>
+                <li>Reliable after-sales support</li>
+              </ul>
+            </div>
+
+            <div style="width: 320px">
+              <div class="card" role="region" aria-label="Savings snapshot">
+                <strong style="font-size: 22px">Projected Savings</strong>
+                <div
+                  style="font-size: 32px; margin-top: 8px"
+                  id="savings-counter"
+                >
+                  32%
+                </div>
+                <p style="color: var(--muted); margin-top: 6px">
+                  Sample estimate — replace with live calculator.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Case studies carousel -->
+        <section id="cases" aria-labelledby="cases-heading">
+          <h2 id="cases-heading">🧠 Trusted by Professionals Across Nigeria</h2>
+          <p style="color: var(--muted)">
+            Facility managers, consultants, and developers trust Energija for
+            measurable efficiency.
+          </p>
+
+          <div class="case-carousel" aria-roledescription="carousel">
+            <div class="carousel-controls" aria-hidden="false">
+              <button id="prev" aria-label="Previous">◀</button>
+              <button id="next" aria-label="Next">▶</button>
+            </div>
+
+            <div class="carousel-track" id="carousel" tabindex="0">
+              <article
+                class="slide"
+                role="group"
+                aria-roledescription="slide"
+                aria-label="Case study 1"
+              >
+                <h3>Commercial Mall Retrofit</h3>
+                <p style="color: var(--muted)">
+                  Saved 28% energy across common areas.
+                </p>
+                <a class="btn btn-ghost" href="#">View Case Study</a>
+              </article>
+
+              <article
+                class="slide"
+                role="group"
+                aria-roledescription="slide"
+                aria-label="Case study 2"
+              >
+                <h3>Industrial Facility Controls</h3>
+                <p style="color: var(--muted)">
+                  Automated scheduling reduced peak load costs by 21%.
+                </p>
+                <a class="btn btn-ghost" href="#">View Case Study</a>
+              </article>
+
+              <article
+                class="slide"
+                role="group"
+                aria-roledescription="slide"
+                aria-label="Case study 3"
+              >
+                <h3>Residential Complex LED Retrofit</h3>
+                <p style="color: var(--muted)">
+                  Extended fixture lifespan and reduced maintenance spend.
+                </p>
+                <a class="btn btn-ghost" href="#">View Case Study</a>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <!-- Lead capture CTA -->
+        <section aria-labelledby="lead-cta">
+          <div class="lead-cta" role="region" aria-labelledby="lead-cta">
+            <div>
+              <strong id="lead-cta">🚀 Ready to Cut Energy Costs?</strong>
+              <p style="margin: 6px 0 0; color: var(--muted)">
+                Let’s assess your lighting setup and recommend the most
+                cost-effective solution.
+              </p>
+            </div>
+            <div style="display: flex; gap: 12px; align-items: center">
+              <form id="email-capture" aria-label="Request quote form">
+                <label for="email" class="sr-only">Email</label>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  required
+                  placeholder="you@company.com"
+                  style="
+                    padding: 10px 12px;
+                    border-radius: 8px;
+                    border: 1px solid #e6e6e6;
+                  "
+                />
+              </form>
+              <a class="btn btn-primary" href="#quote" id="quote-btn"
+                >Request Quote</a
+              >
+            </div>
+          </div>
+        </section>
+
+        <footer>
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              gap: 20px;
+              flex-wrap: wrap;
+            "
+          >
+            <div style="max-width: 420px">
+              <strong>Energija Integrated Systems</strong>
+              <p style="color: var(--muted)">
+                Smarter lighting solutions built for Nigeria.
+              </p>
+            </div>
+
+            <div>
+              <nav aria-label="footer navigation">
+                <a href="#services">Services</a> •
+                <a href="#cases">Case Studies</a> •
+                <a href="#contact">Contact</a>
+              </nav>
+              <p style="color: var(--muted); margin-top: 8px">
+                © Energija — All rights reserved
+              </p>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </main>
+
+    <!-- Minimal JS for interactions -->
+    <script>
+      // IntersectionObserver for reveals (staggered)
+      (function () {
+        const reveals = document.querySelectorAll(".reveal");
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.style.transition =
+                  "opacity .6s ease, transform .6s cubic-bezier(.2,.9,.2,1)";
+                entry.target.style.opacity = 1;
+                entry.target.style.transform = "translateY(0)";
+                io.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.12 }
+        );
+
+        reveals.forEach((el, i) => {
+          el.style.opacity = 0;
+          el.style.transform = "translateY(18px)";
+          setTimeout(() => io.observe(el), 60 * i);
+        });
+      })();
+
+      // Simple carousel logic (keyboard + buttons + focus trap)
+      (function () {
+        const track = document.getElementById("carousel");
+        const prev = document.getElementById("prev");
+        const next = document.getElementById("next");
+        const slides = Array.from(track.querySelectorAll(".slide"));
+        let idx = 0;
+
+        function scrollToIndex(i) {
+          idx = (i + slides.length) % slides.length;
+          const slide = slides[idx];
+          slide.focus(); // accessibility: focus the visible slide
+          slide.scrollIntoView({ behavior: "smooth", inline: "center" });
+        }
+
+        prev.addEventListener("click", () => scrollToIndex(idx - 1));
+        next.addEventListener("click", () => scrollToIndex(idx + 1));
+
+        track.addEventListener("keydown", (e) => {
+          if (e.key === "ArrowRight") {
+            e.preventDefault();
+            scrollToIndex(idx + 1);
+          }
+          if (e.key === "ArrowLeft") {
+            e.preventDefault();
+            scrollToIndex(idx - 1);
+          }
+        });
+
+        // Make slides reachable by keyboard
+        slides.forEach((s) => s.setAttribute("tabindex", "0"));
+
+        // Initial reveal
+        scrollToIndex(0);
+      })();
+
+      // Savings counter (simple animated number)
+      (function () {
+        const el = document.getElementById("savings-counter");
+        let start = 0;
+        const end = 32;
+        const duration = 900;
+        let startTime = null;
+        function step(ts) {
+          if (!startTime) startTime = ts;
+          const progress = Math.min((ts - startTime) / duration, 1);
+          el.textContent = Math.round(progress * end) + "%";
+          if (progress < 1) requestAnimationFrame(step);
+        }
+        // Delay start until visible
+        const io = new IntersectionObserver(
+          (entries) => {
+            if (entries[0].isIntersecting) requestAnimationFrame(step);
+            io.disconnect();
+          },
+          { threshold: 0.3 }
+        );
+        io.observe(el);
+      })();
+
+      // Email capture simple handler
+      document
+        .getElementById("quote-btn")
+        .addEventListener("click", function (e) {
+          const email = document.getElementById("email").value;
+          if (email && /\S+@\S+\.\S+/.test(email)) {
+            alert("Thanks! We will contact you shortly. (Prototype)");
+          } else {
+            // focus the email input
+            document.getElementById("email").focus();
+          }
+        });
+
+      // Respect prefers-reduced-motion (additional safety)
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        document.documentElement.classList.add("reduced-motion");
+      }
+    </script>
+  </body>
+</html>

@@ -4,800 +4,110 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Energija — Smart Lighting & Energy Solutions</title>
+
+    <!-- Bootstrap CSS -->
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Syne:wght@400;500;600;700;800&display=swap"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
-    <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
 
-      :root {
-        --color-primary: #0ea5e9;
-        --color-secondary: #f59e0b;
-        --color-accent: #10b981;
-        --color-dark: #0f172a;
-        --color-text: #1e293b;
-        --color-text-muted: #64748b;
-        --color-bg: #fafafa;
-        --font-display: "Syne", sans-serif;
-        --font-body: "Inter", sans-serif;
-      }
-
-      html {
-        scroll-behavior: smooth;
-        font-size: 16px;
-      }
-
-      body {
-        font-family: var(--font-body);
-        font-weight: 400;
-        color: var(--color-text);
-        background: var(--color-bg);
-        line-height: 1.6;
-        overflow-x: hidden;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-      }
-
-      /* Header */
-      .header {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        z-index: 1000;
-        padding: 1.75rem 5%;
-        background: rgba(250, 250, 250, 0.8);
-        backdrop-filter: blur(12px);
-        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-      }
-
-      .header-content {
-        max-width: 1600px;
-        margin: 0 auto;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      }
-
-      .logo {
-        font-family: var(--font-display);
-        font-size: 1.5rem;
-        font-weight: 700;
-        color: var(--color-dark);
-        letter-spacing: -0.02em;
-      }
-
-      .nav {
-        display: flex;
-        gap: 2.5rem;
-        align-items: center;
-      }
-
-      .nav a {
-        font-size: 0.9375rem;
-        font-weight: 500;
-        color: var(--color-text-muted);
-        text-decoration: none;
-        transition: color 0.3s ease;
-        letter-spacing: -0.01em;
-      }
-
-      .nav a:hover {
-        color: var(--color-dark);
-      }
-
-      /* Hero Section */
-      .hero {
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        padding: 8rem 5% 4rem;
-        position: relative;
-        background: white;
-      }
-
-      .hero-content {
-        max-width: 1600px;
-        margin: 0 auto;
-        width: 100%;
-      }
-
-      .hero-label {
-        font-size: 0.875rem;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.08em;
-        color: var(--color-text-muted);
-        margin-bottom: 2rem;
-        opacity: 0;
-        animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.2s;
-      }
-
-      .hero h1 {
-        font-family: var(--font-display);
-        font-size: clamp(3.5rem, 9vw, 8.5rem);
-        font-weight: 700;
-        line-height: 1.05;
-        letter-spacing: -0.03em;
-        color: var(--color-dark);
-        margin-bottom: 2rem;
-        max-width: 1200px;
-      }
-
-      .hero h1 .line {
-        display: block;
-        opacity: 0;
-        animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-      }
-
-      .hero h1 .line:nth-child(1) {
-        animation-delay: 0.3s;
-      }
-      .hero h1 .line:nth-child(2) {
-        animation-delay: 0.4s;
-        font-weight: 400;
-        color: var(--color-text-muted);
-      }
-
-      @keyframes fadeUp {
-        from {
-          opacity: 0;
-          transform: translateY(24px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-
-      .hero-description {
-        font-size: 1.25rem;
-        font-weight: 400;
-        line-height: 1.7;
-        color: var(--color-text-muted);
-        max-width: 680px;
-        margin-bottom: 3rem;
-        letter-spacing: -0.01em;
-        opacity: 0;
-        animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.6s;
-      }
-
-      .hero-cta {
-        display: flex;
-        gap: 1rem;
-        align-items: center;
-        opacity: 0;
-        animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.7s;
-      }
-
-      .btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        padding: 1rem 2rem;
-        font-family: var(--font-body);
-        font-size: 0.9375rem;
-        font-weight: 500;
-        text-decoration: none;
-        border-radius: 6px;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        letter-spacing: -0.01em;
-      }
-
-      .btn-primary {
-        background: var(--color-dark);
-        color: white;
-      }
-
-      .btn-primary:hover {
-        background: var(--color-text);
-        transform: translateY(-2px);
-      }
-
-      .btn-secondary {
-        background: transparent;
-        color: var(--color-text);
-        border: 1px solid rgba(0, 0, 0, 0.1);
-      }
-
-      .btn-secondary:hover {
-        border-color: var(--color-dark);
-        background: rgba(0, 0, 0, 0.02);
-      }
-
-      /* Section Base */
-      section {
-        padding: 8rem 5%;
-      }
-
-      .section-container {
-        max-width: 1600px;
-        margin: 0 auto;
-      }
-
-      .section-label {
-        font-size: 0.875rem;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.08em;
-        color: var(--color-text-muted);
-        margin-bottom: 1.5rem;
-      }
-
-      .section-title {
-        font-family: var(--font-display);
-        font-size: clamp(2.5rem, 5vw, 5rem);
-        font-weight: 700;
-        line-height: 1.1;
-        letter-spacing: -0.03em;
-        color: var(--color-dark);
-        margin-bottom: 1.5rem;
-        max-width: 900px;
-      }
-
-      .section-description {
-        font-size: 1.25rem;
-        font-weight: 400;
-        line-height: 1.7;
-        color: var(--color-text-muted);
-        max-width: 680px;
-        letter-spacing: -0.01em;
-      }
-
-      /* Stats Section */
-      .stats-section {
-        background: white;
-        border-top: 1px solid rgba(0, 0, 0, 0.05);
-        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-      }
-
-      .stats-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 4rem;
-      }
-
-      .stat-item {
-        opacity: 0;
-        transform: translateY(20px);
-        transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-          transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-      }
-
-      .stat-item.visible {
-        opacity: 1;
-        transform: translateY(0);
-      }
-
-      .stat-number {
-        font-family: var(--font-display);
-        font-size: clamp(3rem, 6vw, 5rem);
-        font-weight: 700;
-        line-height: 1;
-        color: var(--color-dark);
-        margin-bottom: 0.75rem;
-        letter-spacing: -0.02em;
-      }
-
-      .stat-label {
-        font-size: 0.9375rem;
-        font-weight: 500;
-        color: var(--color-text-muted);
-        letter-spacing: -0.01em;
-      }
-
-      /* Problem Section */
-      .problem-section {
-        background: var(--color-dark);
-        color: white;
-      }
-
-      .problem-section .section-label {
-        color: rgba(255, 255, 255, 0.5);
-      }
-
-      .problem-section .section-title {
-        color: white;
-      }
-
-      .problem-section .section-description {
-        color: rgba(255, 255, 255, 0.7);
-      }
-
-      .problem-content {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 8rem;
-        margin-top: 4rem;
-        align-items: start;
-      }
-
-      .problem-text {
-        position: sticky;
-        top: 8rem;
-      }
-
-      .problem-list {
-        display: flex;
-        flex-direction: column;
-        gap: 3rem;
-      }
-
-      .problem-item {
-        padding: 2.5rem;
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 8px;
-        transition: all 0.3s ease;
-        opacity: 0;
-        transform: translateY(20px);
-      }
-
-      .problem-item.visible {
-        opacity: 1;
-        transform: translateY(0);
-      }
-
-      .problem-item:hover {
-        background: rgba(255, 255, 255, 0.05);
-        border-color: rgba(255, 255, 255, 0.15);
-        transform: translateY(-4px);
-      }
-
-      .problem-item h3 {
-        font-family: var(--font-display);
-        font-size: 1.75rem;
-        font-weight: 600;
-        margin-bottom: 1rem;
-        letter-spacing: -0.02em;
-      }
-
-      .problem-item p {
-        font-size: 1.0625rem;
-        font-weight: 400;
-        line-height: 1.7;
-        color: rgba(255, 255, 255, 0.7);
-        letter-spacing: -0.01em;
-      }
-
-      /* Solution Section */
-      .solution-section {
-        background: white;
-      }
-
-      .solution-grid {
-        display: grid;
-        grid-template-columns: repeat(12, 1fr);
-        gap: 2rem;
-        margin-top: 4rem;
-      }
-
-      .solution-feature {
-        grid-column: span 4;
-        opacity: 0;
-        transform: translateY(20px);
-        transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-          transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-      }
-
-      .solution-feature.visible {
-        opacity: 1;
-        transform: translateY(0);
-      }
-
-      .solution-feature:nth-child(2) {
-        transition-delay: 0.1s;
-      }
-
-      .solution-feature:nth-child(3) {
-        transition-delay: 0.2s;
-      }
-
-      .feature-icon {
-        width: 56px;
-        height: 56px;
-        background: var(--color-bg);
-        border-radius: 8px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 1.5rem;
-        font-size: 1.75rem;
-      }
-
-      .solution-feature h3 {
-        font-family: var(--font-display);
-        font-size: 1.5rem;
-        font-weight: 600;
-        margin-bottom: 1rem;
-        letter-spacing: -0.02em;
-        color: var(--color-dark);
-      }
-
-      .solution-feature p {
-        font-size: 1.0625rem;
-        font-weight: 400;
-        line-height: 1.7;
-        color: var(--color-text-muted);
-        letter-spacing: -0.01em;
-      }
-
-      /* Services Section */
-      .services-section {
-        background: var(--color-bg);
-      }
-
-      .services-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-        gap: 2rem;
-        margin-top: 4rem;
-      }
-
-      .service-card {
-        background: white;
-        border: 1px solid rgba(0, 0, 0, 0.08);
-        border-radius: 12px;
-        overflow: hidden;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        opacity: 0;
-        transform: translateY(20px);
-      }
-
-      .service-card.visible {
-        opacity: 1;
-        transform: translateY(0);
-      }
-
-      .service-card:hover {
-        border-color: rgba(0, 0, 0, 0.15);
-        transform: translateY(-4px);
-        box-shadow: 0 12px 48px rgba(0, 0, 0, 0.08);
-      }
-
-      .service-image {
-        width: 100%;
-        height: 280px;
-        background: linear-gradient(
-          135deg,
-          var(--color-primary),
-          var(--color-accent)
-        );
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        font-size: 1rem;
-        font-weight: 500;
-        text-align: center;
-        padding: 2rem;
-        line-height: 1.5;
-      }
-
-      .service-content {
-        padding: 2rem;
-      }
-
-      .service-label {
-        font-size: 0.8125rem;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.08em;
-        color: var(--color-text-muted);
-        margin-bottom: 0.75rem;
-      }
-
-      .service-card h3 {
-        font-family: var(--font-display);
-        font-size: 1.75rem;
-        font-weight: 600;
-        margin-bottom: 1rem;
-        letter-spacing: -0.02em;
-        color: var(--color-dark);
-      }
-
-      .service-card p {
-        font-size: 1.0625rem;
-        font-weight: 400;
-        line-height: 1.7;
-        color: var(--color-text-muted);
-        margin-bottom: 1.5rem;
-        letter-spacing: -0.01em;
-      }
-
-      .service-result {
-        font-size: 0.9375rem;
-        font-weight: 600;
-        color: var(--color-accent);
-        letter-spacing: -0.01em;
-      }
-
-      /* Why Section */
-      .why-section {
-        background: white;
-      }
-
-      .why-content {
-        display: grid;
-        grid-template-columns: 1fr 1.2fr;
-        gap: 8rem;
-        align-items: center;
-        margin-top: 4rem;
-      }
-
-      .why-text {
-        opacity: 0;
-        transform: translateY(20px);
-        transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-          transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-      }
-
-      .why-text.visible {
-        opacity: 1;
-        transform: translateY(0);
-      }
-
-      .why-features {
-        display: flex;
-        flex-direction: column;
-        gap: 2rem;
-      }
-
-      .why-feature {
-        display: flex;
-        gap: 1.5rem;
-        padding: 2rem;
-        background: var(--color-bg);
-        border-radius: 8px;
-        transition: all 0.3s ease;
-        opacity: 0;
-        transform: translateX(20px);
-      }
-
-      .why-feature.visible {
-        opacity: 1;
-        transform: translateX(0);
-      }
-
-      .why-feature:hover {
-        background: rgba(0, 0, 0, 0.02);
-        transform: translateX(-4px);
-      }
-
-      .why-feature-number {
-        font-family: var(--font-display);
-        font-size: 2rem;
-        font-weight: 700;
-        color: var(--color-text-muted);
-        flex-shrink: 0;
-        line-height: 1;
-      }
-
-      .why-feature-content h4 {
-        font-size: 1.25rem;
-        font-weight: 600;
-        margin-bottom: 0.5rem;
-        letter-spacing: -0.01em;
-        color: var(--color-dark);
-      }
-
-      .why-feature-content p {
-        font-size: 1rem;
-        font-weight: 400;
-        line-height: 1.6;
-        color: var(--color-text-muted);
-        letter-spacing: -0.01em;
-      }
-
-      /* CTA Section */
-      .cta-section {
-        background: var(--color-dark);
-        color: white;
-        text-align: center;
-      }
-
-      .cta-content {
-        max-width: 800px;
-        margin: 0 auto;
-      }
-
-      .cta-section .section-title {
-        color: white;
-        margin: 0 auto 2rem;
-      }
-
-      .cta-section .section-description {
-        color: rgba(255, 255, 255, 0.7);
-        margin: 0 auto 3rem;
-      }
-
-      .cta-section .btn-primary {
-        background: white;
-        color: var(--color-dark);
-      }
-
-      .cta-section .btn-primary:hover {
-        background: rgba(255, 255, 255, 0.9);
-      }
-
-      /* Footer */
-      .footer {
-        background: white;
-        border-top: 1px solid rgba(0, 0, 0, 0.05);
-        padding: 4rem 5% 2rem;
-      }
-
-      .footer-content {
-        max-width: 1600px;
-        margin: 0 auto;
-        display: grid;
-        grid-template-columns: 2fr 1fr 1fr 1fr;
-        gap: 4rem;
-        margin-bottom: 3rem;
-      }
-
-      .footer-brand h3 {
-        font-family: var(--font-display);
-        font-size: 1.5rem;
-        font-weight: 700;
-        margin-bottom: 1rem;
-        letter-spacing: -0.02em;
-      }
-
-      .footer-brand p {
-        font-size: 1rem;
-        line-height: 1.6;
-        color: var(--color-text-muted);
-        max-width: 400px;
-      }
-
-      .footer-section h4 {
-        font-size: 0.875rem;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.08em;
-        margin-bottom: 1.25rem;
-        color: var(--color-text);
-      }
-
-      .footer-section a {
-        display: block;
-        font-size: 0.9375rem;
-        font-weight: 400;
-        color: var(--color-text-muted);
-        text-decoration: none;
-        margin-bottom: 0.75rem;
-        transition: color 0.3s ease;
-      }
-
-      .footer-section a:hover {
-        color: var(--color-dark);
-      }
-
-      .footer-bottom {
-        max-width: 1600px;
-        margin: 0 auto;
-        padding-top: 2rem;
-        border-top: 1px solid rgba(0, 0, 0, 0.05);
-        font-size: 0.875rem;
-        color: var(--color-text-muted);
-        text-align: center;
-      }
-
-      /* Scroll Animations */
-      .scroll-reveal {
-        opacity: 0;
-        transform: translateY(20px);
-        transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-          transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-      }
-
-      .scroll-reveal.visible {
-        opacity: 1;
-        transform: translateY(0);
-      }
-
-      /* Responsive */
-      @media (max-width: 1024px) {
-        .problem-content,
-        .why-content,
-        .footer-content {
-          grid-template-columns: 1fr;
-          gap: 4rem;
-        }
-
-        .problem-text {
-          position: static;
-        }
-
-        .solution-feature {
-          grid-column: span 12;
-        }
-
-        .services-grid {
-          grid-template-columns: 1fr;
-        }
-      }
-
-      @media (max-width: 768px) {
-        section {
-          padding: 5rem 5%;
-        }
-
-        .nav {
-          display: none;
-        }
-
-        .hero {
-          padding: 6rem 5% 4rem;
-        }
-
-        .hero-cta {
-          flex-direction: column;
-          align-items: stretch;
-        }
-
-        .btn {
-          justify-content: center;
-        }
-      }
-    </style>
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Syne:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/css/styles_1.css" />
   </head>
   <body>
     <!-- Header -->
-    <header class="header">
-      <div class="header-content">
-        <div class="logo">Energija</div>
-        <nav class="nav">
-          <a href="#about">About</a>
-          <a href="#services">Services</a>
-          <a href="#contact">Contact</a>
-        </nav>
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="#">
+          <img src="assets/img/energija_logo.png" alt="Energija" />
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div
+          class="collapse navbar-collapse justify-content-end"
+          id="navbarNav"
+        >
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="#about">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#services">Services</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#contact">Contact</a>
+            </li>
+          </ul>
+        </div>
       </div>
-    </header>
+    </nav>
 
-    <!-- Hero -->
-    <section class="hero">
-      <div class="hero-content">
-        <div class="hero-label">Intelligent Energy Solutions</div>
-        <h1>
-          <span class="line">Smarter lighting,</span>
-          <span class="line">lower costs.</span>
-        </h1>
-        <p class="hero-description">
-          We help construction, real estate, and facility management
-          professionals reduce operational costs through advanced energy-saving
-          lighting control systems and LED solutions.
-        </p>
-        <div class="hero-cta">
-          <a href="#contact" class="btn btn-primary">Request a quote</a>
-          <a href="#services" class="btn btn-secondary">Explore services</a>
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="container">
+        <div class="row align-items-center hero-bg">
+          <div class="col-lg-6">
+            <div class="hero-label">Intelligent Energy Solutions</div>
+            <h1 class="hero-title">Smarter lighting, lower costs.</h1>
+            <p class="hero-description">
+              We help construction, real estate, and facility management
+              professionals reduce operational costs through advanced
+              energy-saving lighting control systems.
+            </p>
+          </div>
+
+          <div class="col-lg-6 hero-CTA">
+            <div
+              class="d-flex gap-3 flex-wrap justify-content-start align-items-end"
+            >
+              <a href="#contact" class="btn btn-primary">Request a quote</a>
+              <a href="#services" class="btn btn-outline-dark"
+                >Explore services</a
+              >
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- Stats -->
+    <!-- hero-image -->
+    <section class="hero-image-large">
+      <div class="container-xl">
+        <div class="row">
+          <div class="col-lg-12">
+            <img class="rounded img-fluid" src="assets/img/hero_1.png" alt="" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats Section -->
     <section class="stats-section">
-      <div class="section-container">
-        <div class="stats-grid">
-          <div class="stat-item scroll-reveal">
+      <div class="container">
+        <div class="row text-center g-5">
+          <div class="col-lg-3 col-md-6 scroll-reveal">
             <div class="stat-number">40%</div>
             <div class="stat-label">Energy reduction</div>
           </div>
-          <div class="stat-item scroll-reveal">
+          <div class="col-lg-3 col-md-6 scroll-reveal">
             <div class="stat-number">12–18</div>
             <div class="stat-label">Months to ROI</div>
           </div>
-          <div class="stat-item scroll-reveal">
+          <div class="col-lg-3 col-md-6 scroll-reveal">
             <div class="stat-number">75%</div>
             <div class="stat-label">Lower consumption</div>
           </div>
-          <div class="stat-item scroll-reveal">
+          <div class="col-lg-3 col-md-6 scroll-reveal">
             <div class="stat-number">24/7</div>
             <div class="stat-label">Support coverage</div>
           </div>
@@ -805,205 +115,93 @@
       </div>
     </section>
 
-    <!-- Problem -->
-    <section class="problem-section" id="about">
-      <div class="section-container">
-        <div class="problem-content">
-          <div class="problem-text scroll-reveal">
-            <div class="section-label">The Problem</div>
-            <h2 class="section-title">
-              Rising energy costs are eating into profits
+    <!-- Text Block Section -->
+    <section class="text-block-section" id="about">
+      <div class="container energy-costs">
+        <div class="row justify-content-center">
+          <div class="col-lg-10 text-center scroll-reveal">
+            <h2 class="section-title text-capitalize">
+              Stop Paying for energy you don't even use
             </h2>
-            <p class="section-description">
+            <p class="section-description mb-4">
               Most commercial spaces still rely on manual lighting control —
               switching off by hand, inconsistent schedules, or guesswork energy
               rationing.
             </p>
-          </div>
-
-          <div class="problem-list">
-            <div class="problem-item scroll-reveal">
-              <h3>Manual control</h3>
-              <p>
-                Switching lights by hand, inconsistent schedules, and guesswork
-                energy rationing create inefficiency at every level of your
-                operation.
-              </p>
-            </div>
-
-            <div class="problem-item scroll-reveal">
-              <h3>Wasted power</h3>
-              <p>
-                Lights left on in empty rooms and inefficient fixtures lead to
-                unnecessary consumption and inflated utility bills.
-              </p>
-            </div>
-
-            <div class="problem-item scroll-reveal">
-              <h3>Declining profitability</h3>
-              <p>
-                Unpredictable costs directly impact your bottom line and
-                threaten long-term business sustainability.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Solution -->
-    <section class="solution-section">
-      <div class="section-container">
-        <div class="scroll-reveal">
-          <div class="section-label">The Solution</div>
-          <h2 class="section-title">
-            Intelligent systems delivering measurable savings
-          </h2>
-          <p class="section-description">
-            We provide smart lighting control systems and high-efficiency LED
-            solutions that deliver energy savings from day one, with flexible
-            pricing tailored to your project.
-          </p>
-        </div>
-
-        <div class="solution-grid">
-          <div class="solution-feature scroll-reveal">
-            <div class="feature-icon">💰</div>
-            <h3>Instant savings</h3>
-            <p>
-              Immediate cost reduction on energy consumption from the moment of
-              installation.
-            </p>
-          </div>
-
-          <div class="solution-feature scroll-reveal">
-            <div class="feature-icon">📈</div>
-            <h3>Fast ROI</h3>
-            <p>
-              Return on investment within 12–18 months of implementation with
-              measurable results.
-            </p>
-          </div>
-
-          <div class="solution-feature scroll-reveal">
-            <div class="feature-icon">🔧</div>
-            <h3>Reliable support</h3>
-            <p>
-              Continuous after-sales support keeping systems running at peak
-              efficiency.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Services -->
-    <section class="services-section" id="services">
-      <div class="section-container">
-        <div class="scroll-reveal">
-          <div class="section-label">Our Services</div>
-          <h2 class="section-title">Smart, scalable lighting solutions</h2>
-        </div>
-
-        <div class="services-grid">
-          <div class="service-card scroll-reveal">
-            <div class="service-image">
-              [Image: Smart control panel interface with motion sensor and
-              scheduling display]
-            </div>
-            <div class="service-content">
-              <div class="service-label">Service 01</div>
-              <h3>Smart lighting control</h3>
-              <p>
-                Intelligent automation with motion sensors, daylight
-                integration, and programmable scheduling for modern buildings.
-              </p>
-              <div class="service-result">↓ Up to 40% energy reduction</div>
-            </div>
-          </div>
-
-          <div class="service-card scroll-reveal">
-            <div class="service-image">
-              [Image: LED installation in commercial office with comparison
-              lighting levels]
-            </div>
-            <div class="service-content">
-              <div class="service-label">Service 02</div>
-              <h3>LED solutions</h3>
-              <p>
-                High-efficiency fixtures with superior brightness and up to 75%
-                lower energy consumption than conventional lighting.
-              </p>
-              <div class="service-result">→ Immediate cost savings</div>
-            </div>
-          </div>
-
-          <div class="service-card scroll-reveal">
-            <div class="service-image">
-              [Image: Technician installing or maintaining lighting system in
-              facility]
-            </div>
-            <div class="service-content">
-              <div class="service-label">Service 03</div>
-              <h3>Installation & support</h3>
-              <p>
-                Professional installation, regular maintenance, and dedicated
-                technical support nationwide.
-              </p>
-              <div class="service-result">✓ Long-term reliability</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Why -->
-    <section class="why-section">
-      <div class="section-container">
-        <div class="why-content">
-          <div class="why-text scroll-reveal">
-            <div class="section-label">Why Energija</div>
-            <h2 class="section-title">
-              Local expertise meets technical excellence
-            </h2>
             <p class="section-description">
-              Unlike global brands with one-size-fits-all systems, we combine
-              technical expertise with deep understanding of Nigerian energy
-              infrastructure.
+              The result? Wasted power, unpredictable bills, and declining
+              profitability that directly impacts your bottom line and threatens
+              long-term sustainability.
             </p>
           </div>
+        </div>
+      </div>
+    </section>
 
-          <div class="why-features">
-            <div class="why-feature scroll-reveal">
-              <div class="why-feature-number">01</div>
-              <div class="why-feature-content">
-                <h4>Flexible pricing</h4>
-                <p>
-                  Customized pricing models that match different project scales
-                  and budgets.
+    <!-- Services Section -->
+    <section class="services-section" id="services">
+      <div class="container">
+        <div class="row mb-5 scroll-reveal">
+          <div class="col-12">
+            <div class="section-label">Our Services</div>
+            <h2 class="section-title">Smart, scalable lighting solutions</h2>
+          </div>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-lg-4 col-md-6 scroll-reveal">
+            <div class="card service-card border-0">
+              <div class="service-image">
+                <img src="assets/img/smart_controls.jpg" alt="" />
+              </div>
+              <div class="card-body p-4">
+                <div class="service-label mb-2">Service 01</div>
+                <h3 class="h4 mb-3">Smart lighting control</h3>
+                <p class="mb-3">
+                  Intelligent automation with motion sensors, daylight
+                  integration, and programmable scheduling.
                 </p>
+                <div class="service-result">↓ Up to 40% energy reduction</div>
               </div>
             </div>
+          </div>
 
-            <div class="why-feature scroll-reveal">
-              <div class="why-feature-number">02</div>
-              <div class="why-feature-content">
-                <h4>Wide product range</h4>
-                <p>
-                  From motion-sensor controls to complete LED retrofits for
-                  every application.
+          <div class="col-lg-4 col-md-6 scroll-reveal">
+            <div class="card service-card border-0">
+              <div class="service-image">
+                <img
+                  src="assets/img/union_bank_2.jpg"
+                  alt="Transformative, brilliant lighting at a client's site"
+                />
+              </div>
+              <div class="card-body p-4">
+                <div class="service-label mb-2">Service 02</div>
+                <h3 class="h4 mb-3">LED solutions</h3>
+                <p class="mb-3">
+                  High-efficiency fixtures with superior brightness and up to
+                  75% lower energy consumption.
                 </p>
+                <div class="service-result">→ Immediate cost savings</div>
               </div>
             </div>
+          </div>
 
-            <div class="why-feature scroll-reveal">
-              <div class="why-feature-number">03</div>
-              <div class="why-feature-content">
-                <h4>Local support</h4>
-                <p>
-                  Responsive nationwide support with understanding of local
-                  infrastructure realities.
+          <div class="col-lg-4 col-md-6 scroll-reveal">
+            <div class="card service-card border-0">
+              <div class="service-image">
+                <img
+                  src="assets/img/light_installation.jpg"
+                  alt="Installing smart lighting"
+                />
+              </div>
+              <div class="card-body p-4">
+                <div class="service-label mb-2">Service 03</div>
+                <h3 class="h4 mb-3">Installation & support</h3>
+                <p class="mb-3">
+                  Professional installation, regular maintenance, and dedicated
+                  technical support nationwide.
                 </p>
+                <div class="service-result">✓ Long-term reliability</div>
               </div>
             </div>
           </div>
@@ -1011,65 +209,249 @@
       </div>
     </section>
 
-    <!-- CTA -->
+    <!-- Split Section -->
+    <section class="split-section">
+      <div class="container">
+        <div class="row align-items-center g-5">
+          <div class="col-lg-6 scroll-reveal">
+            <h2 class="section-title">Why businesses choose Energija</h2>
+            <p class="section-description mb-4">
+              Our technical expertise and deep knowledge of Nigeria’s energy
+              infrastructure set us apart from one-size-fits-all alternatives.
+            </p>
+            <p class="section-description">
+              We offer flexible pricing models, a wide product range from
+              motion-sensor controls to complete LED retrofits, and responsive
+              nationwide support.
+            </p>
+          </div>
+
+          <div class="col-lg-6 scroll-reveal">
+            <div class="split-image parallax" data-speed="0.02">
+              <img
+                src="assets/img/Lagos_skyline.jpg"
+                alt="Lagos skyline at night"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Scroller Section -->
+    <section class="scroller-section">
+      <div class="container mb-5">
+        <div class="row">
+          <div class="col-12">
+            <h2 class="text-white mb-3">Trusted by leading organizations</h2>
+            <p class="text-white-50">
+              We've helped businesses across Nigeria achieve measurable energy
+              savings
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="scroller-track">
+        <div class="scroller-item" id="item-1">
+          <!-- [Client Project 1:<br />Office Complex Lagos] -->
+          <img src="assets/img/TPH.jpg" alt="" />
+        </div>
+        <div class="scroller-item item-2">
+          [Client Project 2:<br />Manufacturing Facility]
+          <img src="assets/img/" alt="" />
+        </div>
+        <div class="scroller-item item-3">
+          [Client Project 3:<br />Retail Center Abuja]
+        </div>
+        <div class="scroller-item item-4">
+          [Client Project 4:<br />Hotel Chain]
+        </div>
+        <div class="scroller-item">
+          [Client Project 5:<br />Industrial Warehouse]
+        </div>
+        <div class="scroller-item">
+          [Client Project 6:<br />Educational Institution]
+        </div>
+        <!-- Duplicate for seamless loop -->
+        <div class="scroller-item">
+          <!-- [Client Project 1:<br />Office Complex Lagos] -->
+          <img src="assets/img/TPH.jpg" alt="" />
+        </div>
+        <div class="scroller-item">
+          [Client Project 2:<br />Manufacturing Facility]
+        </div>
+        <div class="scroller-item">
+          [Client Project 3:<br />Retail Center Abuja]
+        </div>
+        <div class="scroller-item">[Client Project 4:<br />Hotel Chain]</div>
+        <div class="scroller-item">
+          <!-- [Client Project 5:<br />Industrial Warehouse] -->
+          <img class="img-fluid" src="assets/img/TPH.jpg" alt="" />
+        </div>
+        <div class="scroller-item">
+          [Client Project 6:<br />Educational Institution]
+        </div>
+      </div>
+    </section>
+
+    <!-- Logo Section -->
+    <section class="logo-section">
+      <div class="container">
+        <div class="row text-center mb-5">
+          <div class="col-12">
+            <h3 class="mb-2">We partner with industry-leading suppliers</h3>
+            <p class="text-muted">
+              Delivering quality products and reliable solutions
+            </p>
+          </div>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-lg-3 col-md-4 col-6">
+            <div class="logo-item">
+              <img
+                class="img-fluid"
+                src="assets/img/partner_logos/cp-electronics.png"
+                alt="CP ELectronics logo"
+              />
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-4 col-6">
+            <div class="logo-item">
+              <img
+                class="img-fluid"
+                src="assets/img/partner_logos/legrand.png"
+                alt="Legrand logo"
+              />
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-4 col-6">
+            <div class="logo-item">
+              <img
+                class="img-fluid"
+                src="assets/img/partner_logos/british-general.png"
+                alt="british-general logo"
+              />
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-4 col-6">
+            <div class="logo-item">
+              <img
+                class="img-fluid"
+                src="assets/img/partner_logos/interra.png"
+                alt="Interra logo"
+              />
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-4 col-6">
+            <div class="logo-item">
+              <img
+                class="img-fluid"
+                src="assets/img/partner_logos/astro.png"
+                alt="Astro lighting logo"
+              />
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-4 col-6">
+            <div class="logo-item">
+              <img
+                class="img-fluid"
+                src="assets/img/partner_logos/masterplug.png"
+                alt="Masterplug Logo"
+              />
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-4 col-6">
+            <div class="logo-item">
+              <img
+                class="img-fluid"
+                src="assets/img/partner_logos/luceco_logo.png"
+                alt="luceco_logo"
+              />
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-4 col-6">
+            <div class="logo-item">
+              <img
+                class="img-fluid"
+                src="assets/img/partner_logos/kingfisher.png"
+                alt="Kingfisher Lighting logo"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
     <section class="cta-section" id="contact">
-      <div class="section-container">
-        <div class="cta-content scroll-reveal">
-          <h2 class="section-title">Ready to cut energy costs?</h2>
-          <p class="section-description">
-            Let's help you take control of your energy consumption. Our team
-            will assess your lighting setup and recommend the most
-            cost-effective solution.
-          </p>
-          <a href="mailto:info@energijaintegrated.com" class="btn btn-primary"
-            >Request a quote</a
-          >
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-8 text-center scroll-reveal">
+            <h2 class="section-title">Ready to cut energy costs?</h2>
+            <p class="section-description mb-5">
+              Let's help you take control of your energy consumption. Our team
+              will assess your lighting setup and recommend the most
+              cost-effective solution.
+            </p>
+            <a href="mailto:info@energijaintegrated.com" class="btn btn-primary"
+              >Request a quote</a
+            >
+          </div>
         </div>
       </div>
     </section>
 
     <!-- Footer -->
     <footer class="footer">
-      <div class="footer-content">
-        <div class="footer-brand">
-          <h3>Energija</h3>
-          <p>
-            Powering Nigeria's businesses with intelligent energy solutions that
-            reduce costs and drive sustainability.
-          </p>
+      <div class="container">
+        <div class="row g-4 mb-5">
+          <div class="col-lg-4">
+            <img src="assets/img/energija_logo_white.png" alt="Energija" />
+            <p>
+              Powering Nigeria's businesses with intelligent energy solutions
+              that reduce costs and drive sustainability.
+            </p>
+          </div>
+
+          <div class="col-lg-2 col-md-4 col-6">
+            <h4>Services</h4>
+            <div class="d-flex flex-column gap-2">
+              <a href="#services">Smart lighting</a>
+              <a href="#services">LED solutions</a>
+              <a href="#services">Installation</a>
+              <a href="#services">Support</a>
+            </div>
+          </div>
+
+          <div class="col-lg-2 col-md-4 col-6">
+            <h4>Company</h4>
+            <div class="d-flex flex-column gap-2">
+              <a href="#about">About</a>
+              <a href="#contact">Contact</a>
+              <a href="#">Privacy</a>
+              <a href="#">Terms</a>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-4">
+            <h4>Contact</h4>
+            <p>Nigeria<br />Nationwide service</p>
+            <a href="mailto:info@energijaintegrated.com"
+              >info@energijaintegrated.com</a
+            >
+          </div>
         </div>
 
-        <div class="footer-section">
-          <h4>Services</h4>
-          <a href="#services">Smart lighting</a>
-          <a href="#services">LED solutions</a>
-          <a href="#services">Installation</a>
-          <a href="#services">Support</a>
+        <div class="footer-bottom text-center">
+          <p>&copy; 2025 Energija Integrated Systems. All rights reserved.</p>
         </div>
-
-        <div class="footer-section">
-          <h4>Company</h4>
-          <a href="#about">About</a>
-          <a href="#contact">Contact</a>
-          <a href="#">Privacy</a>
-          <a href="#">Terms</a>
-        </div>
-
-        <div class="footer-section">
-          <h4>Contact</h4>
-          <p style="margin-bottom: 0.75rem; font-size: 0.9375rem">
-            Nigeria<br />Nationwide service
-          </p>
-          <a href="mailto:info@energijaintegrated.com"
-            >info@energijaintegrated.com</a
-          >
-        </div>
-      </div>
-
-      <div class="footer-bottom">
-        <p>&copy; 2025 Energija Integrated Systems. All rights reserved.</p>
       </div>
     </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
       // Scroll reveal animation
@@ -1086,13 +468,20 @@
         });
       }, observerOptions);
 
-      document
-        .querySelectorAll(
-          ".scroll-reveal, .stat-item, .problem-item, .solution-feature, .service-card, .why-text, .why-feature"
-        )
-        .forEach((el) => {
-          observer.observe(el);
+      document.querySelectorAll(".scroll-reveal").forEach((el) => {
+        observer.observe(el);
+      });
+
+      // Parallax effect
+      window.addEventListener("scroll", () => {
+        const scrolled = window.pageYOffset;
+
+        document.querySelectorAll(".parallax").forEach((el) => {
+          const speed = el.dataset.speed || 0.5;
+          const yPos = -(scrolled * speed);
+          el.style.transform = `translateY(${yPos}px)`;
         });
+      });
 
       // Smooth scroll
       document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
